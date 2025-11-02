@@ -28,4 +28,11 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
+  <distributionManagement>
+    <repository>
+      <id>github</id>
+      <name>GitHub Packages</name>
+      <url>https://maven.pkg.github.com/subhm4dev/ecom-shared-libs</url>
+    </repository>
+  </distributionManagement>
 </project>
