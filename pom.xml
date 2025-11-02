@@ -10,6 +10,13 @@
     <module>tenant-context-starter</module>
     <module>custom-error-starter</module>
   </modules>
+  <repositories>
+    <repository>
+      <id>github</id>
+      <name>GitHub Packages</name>
+      <url>https://maven.pkg.github.com/subhm4dev/ecom-bom</url>
+    </repository>
+  </repositories>
   <dependencyManagement>
     <dependencies>
       <dependency>
