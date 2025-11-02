@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 
 public enum ErrorCode {
     EMAIL_TAKEN(HttpStatus.CONFLICT),
+    PHONE_TAKEN(HttpStatus.CONFLICT),
     BAD_CREDENTIALS(HttpStatus.UNAUTHORIZED),
     TOKEN_EXPIRED(HttpStatus.UNAUTHORIZED),
     INSUFFICIENT_SCOPE(HttpStatus.FORBIDDEN),
