@@ -11,7 +11,8 @@ public enum ErrorCode {
     ADDRESS_DUPLICATE(HttpStatus.CONFLICT),
     SKU_REQUIRED(HttpStatus.BAD_REQUEST),
     INSUFFICIENT_STOCK(HttpStatus.CONFLICT),
-    PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND);
+    PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND),
+    PROFILE_NOT_FOUND(HttpStatus.NOT_FOUND);
 
     private final HttpStatus httpStatus;
 
