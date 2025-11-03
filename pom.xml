@@ -9,6 +9,7 @@
   <modules>
     <module>tenant-context-starter</module>
     <module>custom-error-starter</module>
+    <module>standard-response-starter</module>
   </modules>
   <repositories>
     <repository>
