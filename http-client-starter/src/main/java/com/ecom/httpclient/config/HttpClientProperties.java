@@ -1,6 +1,5 @@
 package com.ecom.httpclient.config;
 
-import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.time.Duration;
@@ -28,7 +27,6 @@ import java.util.Map;
  *     limit-refresh-period: PT1M
  * </pre>
  */
-@Data
 @ConfigurationProperties(prefix = "http-client")
 public class HttpClientProperties {
     
@@ -78,7 +76,79 @@ public class HttpClientProperties {
      */
     private Map<String, ServiceConfig> services = new HashMap<>();
     
-    @Data
+    // Getters and Setters
+    public Duration getDefaultTimeout() {
+        return defaultTimeout;
+    }
+
+    public void setDefaultTimeout(Duration defaultTimeout) {
+        this.defaultTimeout = defaultTimeout;
+    }
+
+    public Duration getConnectTimeout() {
+        return connectTimeout;
+    }
+
+    public void setConnectTimeout(Duration connectTimeout) {
+        this.connectTimeout = connectTimeout;
+    }
+
+    public Duration getReadTimeout() {
+        return readTimeout;
+    }
+
+    public void setReadTimeout(Duration readTimeout) {
+        this.readTimeout = readTimeout;
+    }
+
+    public Duration getWriteTimeout() {
+        return writeTimeout;
+    }
+
+    public void setWriteTimeout(Duration writeTimeout) {
+        this.writeTimeout = writeTimeout;
+    }
+
+    public Duration getResponseTimeout() {
+        return responseTimeout;
+    }
+
+    public void setResponseTimeout(Duration responseTimeout) {
+        this.responseTimeout = responseTimeout;
+    }
+
+    public CircuitBreakerConfig getCircuitBreaker() {
+        return circuitBreaker;
+    }
+
+    public void setCircuitBreaker(CircuitBreakerConfig circuitBreaker) {
+        this.circuitBreaker = circuitBreaker;
+    }
+
+    public RetryConfig getRetry() {
+        return retry;
+    }
+
+    public void setRetry(RetryConfig retry) {
+        this.retry = retry;
+    }
+
+    public RateLimiterConfig getRateLimiter() {
+        return rateLimiter;
+    }
+
+    public void setRateLimiter(RateLimiterConfig rateLimiter) {
+        this.rateLimiter = rateLimiter;
+    }
+
+    public Map<String, ServiceConfig> getServices() {
+        return services;
+    }
+
+    public void setServices(Map<String, ServiceConfig> services) {
+        this.services = services;
+    }
+
     public static class CircuitBreakerConfig {
         /**
          * Failure rate threshold percentage (0-100)
@@ -105,9 +175,49 @@ public class HttpClientProperties {
          * Enable circuit breaker (default: true)
          */
         private boolean enabled = true;
+
+        // Getters and Setters
+        public float getFailureRateThreshold() {
+            return failureRateThreshold;
+        }
+
+        public void setFailureRateThreshold(float failureRateThreshold) {
+            this.failureRateThreshold = failureRateThreshold;
+        }
+
+        public Duration getWaitDurationInOpenState() {
+            return waitDurationInOpenState;
+        }
+
+        public void setWaitDurationInOpenState(Duration waitDurationInOpenState) {
+            this.waitDurationInOpenState = waitDurationInOpenState;
+        }
+
+        public int getRingBufferSizeInClosedState() {
+            return ringBufferSizeInClosedState;
+        }
+
+        public void setRingBufferSizeInClosedState(int ringBufferSizeInClosedState) {
+            this.ringBufferSizeInClosedState = ringBufferSizeInClosedState;
+        }
+
+        public int getRingBufferSizeInHalfOpenState() {
+            return ringBufferSizeInHalfOpenState;
+        }
+
+        public void setRingBufferSizeInHalfOpenState(int ringBufferSizeInHalfOpenState) {
+            this.ringBufferSizeInHalfOpenState = ringBufferSizeInHalfOpenState;
+        }
+
+        public boolean isEnabled() {
+            return enabled;
+        }
+
+        public void setEnabled(boolean enabled) {
+            this.enabled = enabled;
+        }
     }
     
-    @Data
     public static class RetryConfig {
         /**
          * Maximum number of retry attempts
@@ -123,9 +233,33 @@ public class HttpClientProperties {
          * Enable retry (default: true)
          */
         private boolean enabled = true;
+
+        // Getters and Setters
+        public int getMaxAttempts() {
+            return maxAttempts;
+        }
+
+        public void setMaxAttempts(int maxAttempts) {
+            this.maxAttempts = maxAttempts;
+        }
+
+        public Duration getWaitDuration() {
+            return waitDuration;
+        }
+
+        public void setWaitDuration(Duration waitDuration) {
+            this.waitDuration = waitDuration;
+        }
+
+        public boolean isEnabled() {
+            return enabled;
+        }
+
+        public void setEnabled(boolean enabled) {
+            this.enabled = enabled;
+        }
     }
     
-    @Data
     public static class RateLimiterConfig {
         /**
          * Maximum number of requests allowed in period
@@ -146,14 +280,78 @@ public class HttpClientProperties {
          * Enable rate limiter (default: true)
          */
         private boolean enabled = true;
+
+        // Getters and Setters
+        public int getLimitForPeriod() {
+            return limitForPeriod;
+        }
+
+        public void setLimitForPeriod(int limitForPeriod) {
+            this.limitForPeriod = limitForPeriod;
+        }
+
+        public Duration getLimitRefreshPeriod() {
+            return limitRefreshPeriod;
+        }
+
+        public void setLimitRefreshPeriod(Duration limitRefreshPeriod) {
+            this.limitRefreshPeriod = limitRefreshPeriod;
+        }
+
+        public Duration getTimeoutDuration() {
+            return timeoutDuration;
+        }
+
+        public void setTimeoutDuration(Duration timeoutDuration) {
+            this.timeoutDuration = timeoutDuration;
+        }
+
+        public boolean isEnabled() {
+            return enabled;
+        }
+
+        public void setEnabled(boolean enabled) {
+            this.enabled = enabled;
+        }
     }
     
-    @Data
     public static class ServiceConfig {
         private Duration timeout;
         private CircuitBreakerConfig circuitBreaker;
         private RetryConfig retry;
         private RateLimiterConfig rateLimiter;
+
+        // Getters and Setters
+        public Duration getTimeout() {
+            return timeout;
+        }
+
+        public void setTimeout(Duration timeout) {
+            this.timeout = timeout;
+        }
+
+        public CircuitBreakerConfig getCircuitBreaker() {
+            return circuitBreaker;
+        }
+
+        public void setCircuitBreaker(CircuitBreakerConfig circuitBreaker) {
+            this.circuitBreaker = circuitBreaker;
+        }
+
+        public RetryConfig getRetry() {
+            return retry;
+        }
+
+        public void setRetry(RetryConfig retry) {
+            this.retry = retry;
+        }
+
+        public RateLimiterConfig getRateLimiter() {
+            return rateLimiter;
+        }
+
+        public void setRateLimiter(RateLimiterConfig rateLimiter) {
+            this.rateLimiter = rateLimiter;
+        }
     }
 }
-

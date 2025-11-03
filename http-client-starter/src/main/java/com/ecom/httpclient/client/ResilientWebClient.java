@@ -10,7 +10,8 @@ import io.github.resilience4j.reactor.ratelimiter.operator.RateLimiterOperator;
 import io.github.resilience4j.reactor.retry.RetryOperator;
 import io.github.resilience4j.retry.Retry;
 import io.github.resilience4j.retry.RetryRegistry;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.ClientRequest;
@@ -50,8 +51,9 @@ import java.util.concurrent.TimeoutException;
  * </pre>
  */
 @Component
-@Slf4j
 public class ResilientWebClient {
+
+    private static final Logger log = LoggerFactory.getLogger(ResilientWebClient.class);
 
     private final HttpClientProperties properties;
     private final CircuitBreakerRegistry circuitBreakerRegistry;
@@ -88,7 +90,7 @@ public class ResilientWebClient {
         // Create HTTP client with timeouts
         HttpClient httpClient = HttpClient.create()
             .responseTimeout(timeout)
-            .option(reactor.netty.channel.ChannelOption.CONNECT_TIMEOUT_MILLIS, 
+            .option(io.netty.channel.ChannelOption.CONNECT_TIMEOUT_MILLIS, 
                 (int) properties.getConnectTimeout().toMillis());
 
         // Create base WebClient
@@ -128,8 +130,10 @@ public class ResilientWebClient {
                 .failureRateThreshold(config.getFailureRateThreshold())
                 .waitDurationInOpenState(java.time.Duration.ofMillis(
                     config.getWaitDurationInOpenState().toMillis()))
-                .ringBufferSizeInClosedState(config.getRingBufferSizeInClosedState())
-                .ringBufferSizeInHalfOpenState(config.getRingBufferSizeInHalfOpenState())
+                .slidingWindowSize(config.getRingBufferSizeInClosedState())
+                .slidingWindowType(io.github.resilience4j.circuitbreaker.CircuitBreakerConfig.SlidingWindowType.COUNT_BASED)
+                .minimumNumberOfCalls(config.getRingBufferSizeInClosedState())
+                .permittedNumberOfCallsInHalfOpenState(config.getRingBufferSizeInHalfOpenState())
                 .recordExceptions(
                     WebClientRequestException.class,
                     WebClientResponseException.class,
