@@ -19,14 +19,13 @@ import org.springframework.web.reactive.function.client.WebClient;
  * 
  * <p>Configures reactive JWT validation services for Spring WebFlux services (Gateway).
  * Only activates when:
- * - WebFlux is on classpath (but NOT MVC)
+ * - WebFlux is on classpath
  * - ReactiveRedisTemplate is available
- * - Gateway property is set
+ * - Gateway property is explicitly set to true
  */
 @Configuration
 @ConditionalOnClass({org.springframework.web.reactive.DispatcherHandler.class, WebClient.class})
-@ConditionalOnMissingClass("org.springframework.web.servlet.DispatcherServlet") // Exclude MVC services
-@ConditionalOnProperty(prefix = "gateway.jwt", name = "enabled", havingValue = "true", matchIfMissing = false) // Explicitly require gateway.jwt.enabled
+@ConditionalOnProperty(prefix = "gateway.jwt", name = "enabled", havingValue = "true", matchIfMissing = false) // Explicitly require gateway.jwt.enabled=true
 @EnableConfigurationProperties(JwtValidationProperties.class)
 @EnableScheduling // Required for scheduled JWKS cache refresh
 public class ReactiveJwtValidationAutoConfiguration {
