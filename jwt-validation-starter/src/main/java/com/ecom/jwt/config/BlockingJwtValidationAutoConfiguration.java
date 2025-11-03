@@ -4,6 +4,7 @@ import com.ecom.httpclient.client.ResilientWebClient;
 import com.ecom.jwt.blocking.BlockingJwtValidationService;
 import com.ecom.jwt.jwks.BlockingJwksService;
 import com.ecom.jwt.session.BlockingSessionService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -41,7 +42,7 @@ public class BlockingJwtValidationAutoConfiguration {
     @ConditionalOnMissingBean
     @ConditionalOnClass(RedisTemplate.class)
     public BlockingSessionService blockingSessionService(
-            RedisTemplate<String, String> redisTemplate,
+            @Qualifier("redisTemplate") RedisTemplate<String, String> redisTemplate,
             JwtValidationProperties properties) {
         return new BlockingSessionService(redisTemplate, properties);
     }
