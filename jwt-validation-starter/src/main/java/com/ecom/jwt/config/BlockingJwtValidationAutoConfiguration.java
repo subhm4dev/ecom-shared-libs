@@ -28,6 +28,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @ConditionalOnClass(name = "org.springframework.web.servlet.DispatcherServlet")
 @ConditionalOnMissingBean(com.ecom.jwt.reactive.ReactiveJwtValidationService.class) // Don't activate if reactive is already configured
 @ConditionalOnProperty(prefix = "jwt", name = "enabled", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(prefix = "gateway.jwt", name = "enabled", havingValue = "false", matchIfMissing = true) // Explicitly exclude Gateway (gateway.jwt.enabled=true means use reactive)
 @EnableConfigurationProperties(JwtValidationProperties.class)
 @EnableScheduling // Required for scheduled JWKS cache refresh
 public class BlockingJwtValidationAutoConfiguration {
@@ -36,7 +37,7 @@ public class BlockingJwtValidationAutoConfiguration {
     @ConditionalOnMissingBean
     @ConditionalOnClass(name = "com.ecom.httpclient.client.ResilientWebClient")
     public BlockingJwksService blockingJwksService(
-            @SuppressWarnings("rawtypes") Object resilientWebClient,
+            @org.springframework.beans.factory.annotation.Qualifier("resilientWebClient") Object resilientWebClient,
             JwtValidationProperties properties) {
         // Cast to ResilientWebClient - safe because @ConditionalOnClass ensures it's available
         @SuppressWarnings("unchecked")
