@@ -6,6 +6,7 @@ import com.ecom.jwt.blocking.BlockingJwtValidationService;
 import com.ecom.jwt.jwks.BlockingJwksService;
 import com.ecom.jwt.session.BlockingSessionService;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -36,11 +37,12 @@ public class BlockingJwtValidationAutoConfiguration {
     
     @Bean
     @ConditionalOnMissingBean
+    @ConditionalOnBean(name = "resilientWebClient") // Ensure bean exists before trying to inject
     @ConditionalOnClass(name = "com.ecom.httpclient.client.ResilientWebClient")
     public BlockingJwksService blockingJwksService(
             @org.springframework.beans.factory.annotation.Qualifier("resilientWebClient") Object resilientWebClient,
             JwtValidationProperties properties) {
-        // Cast to ResilientWebClient - safe because @ConditionalOnClass ensures it's available
+        // Cast to ResilientWebClient - safe because @ConditionalOnBean ensures it exists
         @SuppressWarnings("unchecked")
         var webClient = (com.ecom.httpclient.client.ResilientWebClient) resilientWebClient;
         return new BlockingJwksService(webClient, properties);
@@ -48,6 +50,7 @@ public class BlockingJwtValidationAutoConfiguration {
     
     @Bean
     @ConditionalOnMissingBean
+    @ConditionalOnBean(name = "redisTemplate", value = RedisTemplate.class) // Ensure blocking RedisTemplate bean exists
     @ConditionalOnClass(RedisTemplate.class)
     public BlockingSessionService blockingSessionService(
             @Qualifier("redisTemplate") RedisTemplate<String, String> redisTemplate,
