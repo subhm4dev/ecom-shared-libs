@@ -11,6 +11,7 @@
     <module>custom-error-starter</module>
     <module>standard-response-starter</module>
     <module>http-client-starter</module>
+    <module>jwt-validation-starter</module>
   </modules>
   <repositories>
     <repository>

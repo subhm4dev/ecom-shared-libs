@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  
+  <parent>
+    <groupId>com.ecom</groupId>
+    <artifactId>ecom-shared-libs</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+  </parent>
+  
+  <artifactId>jwt-validation-starter</artifactId>
+  <version>0.1.0-SNAPSHOT</version>
+  
+  <dependencies>
+    <!-- Spring Boot Starter (for auto-configuration) -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter</artifactId>
+    </dependency>
+    
+    <!-- JWT Library (Nimbus JOSE + JWT) -->
+    <dependency>
+      <groupId>com.nimbusds</groupId>
+      <artifactId>nimbus-jose-jwt</artifactId>
+    </dependency>
+    
+    <!-- Redis dependencies (provided - services must include these) -->
+    <!-- These are marked as provided because services will provide the actual versions -->
+    <dependency>
+      <groupId>org.springframework.data</groupId>
+      <artifactId>spring-data-redis</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    
+    <!-- WebFlux for WebClient (provided - reactive services will include it) -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-webflux</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    
+    <!-- HTTP Client Starter (for ResilientWebClient - blocking services only) -->
+    <!-- Note: This is optional - blocking services should provide it -->
+    <dependency>
+      <groupId>com.ecom</groupId>
+      <artifactId>http-client-starter</artifactId>
+      <version>0.1.0-SNAPSHOT</version>
+      <optional>true</optional>
+    </dependency>
+    
+    <!-- Jackson for JSON parsing -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+    </dependency>
+    
+    <!-- SLF4J API for logging -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+    </dependency>
+  </dependencies>
+  
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.13.0</version>
+        <configuration>
+          <release>25</release>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
+

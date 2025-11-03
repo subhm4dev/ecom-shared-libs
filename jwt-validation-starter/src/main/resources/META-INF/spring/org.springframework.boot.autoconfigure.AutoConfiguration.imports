@@ -1,0 +1,3 @@
+com.ecom.jwt.config.BlockingJwtValidationAutoConfiguration
+com.ecom.jwt.config.ReactiveJwtValidationAutoConfiguration
+
