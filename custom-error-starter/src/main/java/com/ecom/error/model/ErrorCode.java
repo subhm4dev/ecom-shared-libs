@@ -26,7 +26,7 @@ public enum ErrorCode {
     RESOURCE_NOT_FOUND(HttpStatus.NOT_FOUND),
     ACCESS_DENIED(HttpStatus.FORBIDDEN),
     INVALID_OPERATION(HttpStatus.BAD_REQUEST),
-    INVALID_REQUEST(HttpStatus.BAD_REQUEST);
+    INVALID_REQUEST(HttpStatus.BAD_REQUEST), BAD_REQUEST(HttpStatus.BAD_REQUEST);
 
     private final HttpStatus httpStatus;
 
